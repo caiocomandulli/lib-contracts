@@ -19,7 +19,7 @@ Right now your database is just a blank slate and knows no contract or how to ha
 
 ### Defining your contract
 
-A contract defines a representation of a type within the database,
+A `Contract` defines a representation of a type within the database,
 and the interactions that the object has with it, such as its constructor,
 setting and getting attributes.
 
@@ -49,7 +49,7 @@ public class NamedExample {
 ```
 
 The getters and setters will be how the contract can define an object.
-We extend the Contract type and pass our NamedExample as its generic type.
+We extend the `Contract` type and pass our NamedExample as its generic type.
 
 ```java
 public class NamedExampleContract extends Contract<NamedExample> {
@@ -86,7 +86,7 @@ public class NamedExampleContract extends Contract<NamedExample> {
 }
 ```
 
-You can notice that the name of the table is passed through the Contract constructor and right after we start defining columns.
+You can notice that the name of the table is passed through the `Contract` constructor and right after we start defining columns.
 
 The columns variable is the list of columns defined in this contract. We define for each attribute in our base object a column,
 and within the column implementation how the attribute is set in an object and how you get it from an object.
@@ -105,7 +105,7 @@ columns.add(new Column<NamedExample, String>("ColumnName", DataType.STRING) {
 });
 ```
 
-The first parameter is the column name within the database, the second is the DataType (see https://github.com/caiocomandulli/lib-contracts-sqlite#available-data-types).
+The first parameter is the column name within the database, the second is the `DataType` (#available-data-types).
 Through other constructors you can set if it is nullable, primary key and auto increment as well.
 
 Finally we define the constructor of the object.
@@ -121,31 +121,31 @@ public NamedExample constructor() {
 
 Available types:
 
-INTEGER maps to a java Integer represented by "INTEGER"
+`INTEGER` maps to a java Integer represented by `INTEGER`
 
-STRING maps to a java String represented by "TEXT"
+`STRING` maps to a java String represented by `TEXT`
 
-BOOLEAN maps to a java Boolean represented by "INTEGER"
+`BOOLEAN` maps to a java Boolean represented by `INTEGER`
 
-DOUBLE maps to a java Double represented by "REAL"
+`DOUBLE` maps to a java Double represented by `REAL`
 
-FLOAT maps to a java Float represented by "REAL"
+`FLOAT` maps to a java Float represented by `REAL`
 
-LONG maps to a java Long represented by "INTEGER"
+`LONG` maps to a java Long represented by `INTEGER`
 
-SHORT maps to a java Short represented by "INTEGER"
+`SHORT` maps to a java Short represented by `INTEGER`
 
 In SQLite:
 
-INTEGER. The value is a signed integer, stored in 1, 2, 3, 4, 6, or 8 bytes depending on the magnitude of the value.
+`INTEGER` The value is a signed integer, stored in 1, 2, 3, 4, 6, or 8 bytes depending on the magnitude of the value.
 
-REAL. The value is a floating point value, stored as an 8-byte IEEE floating point number.
+`REAL` The value is a floating point value, stored as an 8-byte IEEE floating point number.
 
-TEXT. The value is a text string, stored using the database encoding (UTF-8, UTF-16BE or UTF-16LE).
+`TEXT` The value is a text string, stored using the database encoding (UTF-8, UTF-16BE or UTF-16LE).
 
 ### Using queries
 
-The Query type provides a fast way to write SQL queries without using SQL.
+The `Query` type provides a fast way to write SQL queries without using SQL.
 It allows you to do select statements without any SQL knowledge.
 
 As an example, a simple Id selection:
@@ -155,8 +155,8 @@ Selection selection = new Query().column("ColumnId").equalsTo(obj.getId()).end()
 contractDatabase.delete(NamedExample.class, selection);
 ````
 
-First we instantiate a query, we pass the target column by calling column,
-we state that the column value must be equals to our value by calling equalsTo
+First we instantiate a query, we pass the target column by calling `column(String)`,
+we state that the column value must be equals to our value by calling `equalsTo(Object)`
 and finally we end the query.
 
 Then we pass the resulting Selection to our delete method, that will delete only
@@ -173,10 +173,10 @@ Here we only query objects that have both the same Id and same Name as our objec
 
 Many other operations are available as greater, smaller, not equals, between, like and more.
 
-To control even more our query we can use the Order type and pass a limit integer to our select.
+To control even more our query we can use the `Order` type and pass a `limit` integer to our select.
 
 ````java
-Selection selection = new Query().column("ColumnId").equalsTo(obj.getId()).and().column("ColumnName").equalsTo(obj.getName()).end();
+Selection selection = new Query().column("ColumnId").greaterThan(10).end();
 Order order = new Order("ColumnName", Type.Descending);
 contractDatabase.select(NamedExample.class, selection, order, 10);
 ````
@@ -185,7 +185,7 @@ Here we state that our results must be limited to 10 entries and ordered from hi
 
 ### Executing raw SQL
 
-Finally you can as well execute a SQL of your own through the method executeSQL.
+Finally you can as well execute a SQL of your own through the method `executeSQL(String)`.
 
 ```java
 public void executeSQL(String sql);
