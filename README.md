@@ -105,7 +105,7 @@ columns.add(new Column<NamedExample, String>("ColumnName", DataType.STRING) {
 });
 ```
 
-The first parameter is the column name within the database, the second is the `DataType` (#available-data-types).
+The first parameter is the column name within the database, the second is the [DataType](#available-data-types).
 Through other constructors you can set if it is nullable, primary key and auto increment as well.
 
 Finally we define the constructor of the object.
