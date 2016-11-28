@@ -105,7 +105,7 @@ columns.add(new Column<NamedExample, String>("ColumnName", DataType.STRING) {
 });
 ```
 
-The first parameter is the column name within the database, the second is the DataType (see https://github.com/caiocomandulli/lib-rest#available-data-types).
+The first parameter is the column name within the database, the second is the DataType (see https://github.com/caiocomandulli/lib-contracts-sqlite#available-data-types).
 Through other constructors you can set if it is nullable, primary key and auto increment as well.
 
 Finally we define the constructor of the object.
@@ -145,6 +145,43 @@ TEXT. The value is a text string, stored using the database encoding (UTF-8, UTF
 
 ### Using queries
 
+The Query type provides a fast way to write SQL queries without using SQL.
+It allows you to do select statements without any SQL knowledge.
+
+As an example, a simple Id selection:
+
+````java
+Selection selection = new Query().column("ColumnId").equalsTo(obj.getId()).end();
+contractDatabase.delete(NamedExample.class, selection);
+````
+
+First we instantiate a query, we pass the target column by calling column,
+we state that the column value must be equals to our value by calling equalsTo
+and finally we end the query.
+
+Then we pass the resulting Selection to our delete method, that will delete only
+objects that match our query.
+
+We can write more complex queries by chaining operators.
+
+````java
+Selection selection = new Query().column("ColumnId").equalsTo(obj.getId()).and().column("ColumnName").equalsTo(obj.getName()).end();
+contractDatabase.select(NamedExample.class, selection);
+````
+
+Here we only query objects that have both the same Id and same Name as our object.
+
+Many other operations are available as greater, smaller, not equals, between, like and more.
+
+To control even more our query we can use the Order type and pass a limit integer to our select.
+
+````java
+Selection selection = new Query().column("ColumnId").equalsTo(obj.getId()).and().column("ColumnName").equalsTo(obj.getName()).end();
+Order order = new Order("ColumnName", Type.Descending);
+contractDatabase.select(NamedExample.class, selection, order, 10);
+````
+
+Here we state that our results must be limited to 10 entries and ordered from highest to lowest value at the name column. 
 
 ### Executing raw SQL
 

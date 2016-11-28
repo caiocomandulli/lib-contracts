@@ -15,7 +15,7 @@ public class Order {
     /**
      * The target column.
      */
-    private final Column<?, ?> column;
+    private final String column;
     /**
      * The order type.
      */
@@ -58,7 +58,7 @@ public class Order {
      * @param column target column
      * @param type   order type
      */
-    public Order(Column<?, ?> column, Type type) {
+    public Order(String column, Type type) {
         this.column = column;
         this.type = type;
     }
@@ -70,6 +70,6 @@ public class Order {
      */
     @Override
     public String toString() {
-        return column.getName() + type;
+        return column + type;
     }
 }
