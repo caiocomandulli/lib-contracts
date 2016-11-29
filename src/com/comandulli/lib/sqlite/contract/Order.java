@@ -19,13 +19,13 @@ public class Order {
     /**
      * The order type.
      */
-    private final Type type;
+    private final OrderType type;
 
     /**
      * The type of ordering
      * if it is Ascending or Descending.
      */
-    public enum Type {
+    public enum OrderType {
         Ascending("ASC"), Descending("DESC");
         /**
          * Text representation in the SQL language.
@@ -58,7 +58,7 @@ public class Order {
      * @param column target column
      * @param type   order type
      */
-    public Order(String column, Type type) {
+    public Order(String column, OrderType type) {
         this.column = column;
         this.type = type;
     }

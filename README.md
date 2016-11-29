@@ -23,7 +23,7 @@ A `Contract` defines a representation of a type within the database,
 and the interactions that the object has with it, such as its constructor,
 setting and getting attributes.
 
-As for our example we will define a simple Object type:
+As for our example we will define a simple `Object`:
 
 ```java
 public class NamedExample {
@@ -48,8 +48,8 @@ public class NamedExample {
 }
 ```
 
-The getters and setters will be how the contract can define an object.
-We extend the `Contract` type and pass our NamedExample as its generic type.
+The getters and setters will be how the contract can define an object's attributes.
+We extend the `Contract` type and pass our `NamedExample` as its generic type.
 
 ```java
 public class NamedExampleContract extends Contract<NamedExample> {
@@ -88,7 +88,7 @@ public class NamedExampleContract extends Contract<NamedExample> {
 
 You can notice that the name of the table is passed through the `Contract` constructor and right after we start defining columns.
 
-The columns variable is the list of columns defined in this contract. We define for each attribute in our base object a column,
+The columns variable is the list of `Column` defined in this contract. We define for each attribute in our base object a `Column`,
 and within the column implementation how the attribute is set in an object and how you get it from an object.
 
 ```java
@@ -106,7 +106,7 @@ columns.add(new Column<NamedExample, String>("ColumnName", DataType.STRING) {
 ```
 
 The first parameter is the column name within the database, the second is the [DataType](#available-data-types).
-Through other constructors you can set if it is nullable, primary key and auto increment as well.
+Through other constructors you can set if it is `nullable`, `primary key` and `auto increment` as well.
 
 Finally we define the constructor of the object.
 
@@ -145,8 +145,8 @@ In SQLite:
 
 ### Using queries
 
-The `Query` type provides a fast way to write SQL queries without using SQL.
-It allows you to do select statements without any SQL knowledge.
+The `Query` type provides a fast way to write SQLite queries without using SQLite language.
+It allows you to do select statements without any SQLite knowledge.
 
 As an example, a simple Id selection:
 
@@ -176,19 +176,20 @@ Many other operations are available as greater, smaller, not equals, between, li
 To control even more our query we can use the `Order` type and pass a `limit` integer to our select.
 
 ````java
-Selection selection = new Query().column("ColumnId").greaterThan(10).end();
-Order order = new Order("ColumnName", Type.Descending);
+Selection selection = new Query().column("ColumnId").greaterThan(5).end();
+Order order = new Order("ColumnName", OrderType.Descending);
 contractDatabase.select(NamedExample.class, selection, order, 10);
 ````
 
-Here we state that our results must be limited to 10 entries and ordered from highest to lowest value at the name column. 
+Here we state that our results must be limited to 10 entries and ordered from highest to lowest `OrderType.Descending` value at the name column. 
+We execute the query by calling `select(Class<?>, Selection, Order, Integer)`.
 
 ### Executing raw SQL
 
 Finally you can as well execute a SQL of your own through the method `executeSQL(String)`.
 
 ```java
-public void executeSQL(String sql);
+contractDatabase.executeSQL(sqlQuery);
 ```
  
 ## Install Library
