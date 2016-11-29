@@ -181,7 +181,7 @@ Order order = new Order("ColumnName", OrderType.Descending);
 contractDatabase.select(NamedExample.class, selection, order, 10);
 ````
 
-Here we state that our results must be limited to 10 entries and ordered from highest to lowest `OrderType.Descending` value at the name column. 
+Here we state that our results must be limited to 10 entries and ordered from highest to lowest (`OrderType.Descending`) value at the name column. 
 We execute the query by calling `select(Class<?>, Selection, Order, Integer)`.
 
 ### Executing raw SQL
