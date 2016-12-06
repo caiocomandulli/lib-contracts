@@ -37,7 +37,7 @@ public class Order {
          *
          * @param text in SQL language.
          */
-        Type(String text) {
+        OrderType(String text) {
             this.text = text;
         }
 
